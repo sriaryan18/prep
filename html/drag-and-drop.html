@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div draggable="true" id="drag-element">
+            Drag me
+        </div>
+        <div id="drop-zone">
+            Drop here
+        </div>
+    </div>
+
+ <template id="drop-template">
+            <div>Dropped content</div>
+          
+    </template> 
+</body>
+<style>
+    #drop-zone{
+        height: 200px;
+        width: 200px;
+        border: 1px solid black;
+        border-radius: 20px;
+        text-align: center;
+    }
+    #drop-zone:hover{
+        border: 2px solid blue;
+    }
+</style>
+<script>
+   const dragElem = document.getElementById('drag-element');
+   dragElem.addEventListener('dragstart', (event) => {
+    console.log('DRAG STARTED')
+    event.dataTransfer.setData('text/plain','MY NAME IS ARYAN')
+   });
+   const dropZone = document.getElementById('drop-zone');
+
+
+   dropZone.addEventListener('dragover', e => e.preventDefault())
+   dropZone.addEventListener('dragenter', (event) => {
+    console.log('Drag entered')
+    dropZone.style.border = '2px solid blue'
+   });
+
+
+
+
+   dropZone.addEventListener('drop', (event) => {
+    event.preventDefault()
+    console.log('Dropped',event.dataTransfer.getData('text/plain'));
+    // dropZone.appendChild(document.createElement('div',event.dataTransfer.getData()))
+    const template = document.getElementById('drop-template').content.cloneNode(true)
+    template.querySelector('div').textContent = event.dataTransfer.getData('text/plain')
+    dropZone.appendChild(template)
+   })
+
+
+</script>
+
+</html>

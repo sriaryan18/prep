@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Progress Bar</title>
+    </head>
+    <body>
+        <div class="progress-bar">
+            <div class="progress-bar-fill" id="fill">
+            </div>
+            <div class="progress-bar-text" id="text">
+                Loading...
+            </div>
+        </div>
+    </body>
+    <style>
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            position: relative;
+        }
+        .progress-bar-fill{
+            text-align: center;
+            background-color: green;
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        .progress-bar-text{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+       
+    </style>
+    <script>
+        const elem = document.getElementById('fill');
+        console.log(elem.style)
+        let percent = 0;
+        let interval = setInterval(() => {
+            if(elem && percent < 100){
+                console.log(percent)
+                percent += 10;
+                elem.style.width = `${percent}%`
+            }
+            if(percent >= 100){
+                const text = document.getElementById('text');
+                text.innerText = 'Done';
+                clearInterval(interval);
+            }
+        },200)
+    </script>
+</html>
