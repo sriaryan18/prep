@@ -2,6 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -109,8 +111,8 @@ public class MainApplication {
 
         // Thread pool executor
 
-        // ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 4, TimeUnit.SECONDS,
-        //         new ArrayBlockingQueue<>(10), new CustomThreadFactory(), new CustomRejectHandler());
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(2, 2, 4, TimeUnit.SECONDS,
+                new ArrayBlockingQueue<>(10), new CustomThreadFactory(), new CustomRejectHandler());
 
         // for(int i =0;i<25;i++){
         // threadPoolExecutor.submit(() -> {
@@ -145,12 +147,12 @@ public class MainApplication {
 
         // callable
 
-        // List<Integer> list = new ArrayList<>();
-        // Future<List<Integer>> res = threadPoolExecutor.submit(() -> {
-        //     list.add(100);
-        //     System.out.println(getThreadName());
+        List<Integer> list = new ArrayList<>();
+        Future<List<Integer>> res = threadPoolExecutor.submit(() -> {
+            list.add(100);
+            System.out.println(getThreadName());
 
-        // }, list);
+        }, list);
 
         // try {
         //     List<Integer> l = res.get();
@@ -194,6 +196,8 @@ public class MainApplication {
 
         long startTime = System.currentTimeMillis();
         ForkJoinPool pool = ForkJoinPool.commonPool();
+        
+        
 
         SumTask task = new SumTask(0,arr.length,arr);
 
